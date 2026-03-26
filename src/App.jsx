@@ -1,14 +1,15 @@
-import { useState } from 'react';
-import { Routes, Route, useNavigate, BrowserRouter } from 'react-router-dom';  // 👈 Add BrowserRouter here
+import { useState, useEffect } from 'react';
+import { Routes, Route, useNavigate, BrowserRouter } from 'react-router-dom';
 import { useUsers } from './data/users';
 import UserTable from './components/UserTable';
 import UserDetail from './components/UserDetail';
 import './App.css';
 
-function App() {
+function AppContent() {
   const { users, loading, error } = useUsers();
   const [searchTerm, setSearchTerm] = useState('');
   const [sortConfig, setSortConfig] = useState({ key: null, direction: 'asc' });
+  const navigate = useNavigate();
 
   const filteredUsers = users.filter(user =>
     user.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -46,13 +47,12 @@ function App() {
   );
 }
 
-// 👈 NEW: Wrap App with basename
-function Root() {
+function App() {
   return (
     <BrowserRouter basename="/user-directory">
-      <App />
+      <AppContent />
     </BrowserRouter>
   );
 }
 
-export default Root;
+export default App;
