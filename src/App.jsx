@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Routes, Route, useNavigate } from 'react-router-dom';
+import { Routes, Route, useNavigate, BrowserRouter } from 'react-router-dom';  // 👈 Add BrowserRouter here
 import { useUsers } from './data/users';
 import UserTable from './components/UserTable';
 import UserDetail from './components/UserDetail';
@@ -46,4 +46,13 @@ function App() {
   );
 }
 
-export default App;
+// 👈 NEW: Wrap App with basename
+function Root() {
+  return (
+    <BrowserRouter basename="/user-directory">
+      <App />
+    </BrowserRouter>
+  );
+}
+
+export default Root;
